@@ -27,7 +27,9 @@ def load_neos(neo_csv_path):
     # TODO: Load NEO data from the given CSV file.
     rs = []
     data = csv.reader(open(neo_csv_path))
-    for line in data:
+    for idx, line in enumerate(data):
+        if idx == 0:
+            continue
         neo = NearEarthObject(line[3], line[4], line[15], line[7])
         rs.append(neo)
     return rs

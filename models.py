@@ -38,7 +38,7 @@ class NearEarthObject:
         """Create a new `NearEarthObject`.
 
         :param pdes: The primary designation for this NEO.
-        :param name: The primary designation for this NEO.
+        :param name: The IAU name for this NEO.
         :param diameter: The diameter, in kilometers, of this NEO.
         :param pha: Whether or not this NEO is potentially hazardous.
         """
@@ -49,7 +49,7 @@ class NearEarthObject:
         # and a missing diameter being represented by `float('nan')`.
         self.designation = pdes
         self.name = None if name == '' else name
-        self.diameter = float('nan') if diameter == None else float(diameter)
+        self.diameter = float('nan') if diameter == '' else float(diameter)
         self.hazardous = bool(pha)
 
         # Create an empty initial collection of linked approaches.
@@ -103,8 +103,8 @@ class CloseApproach:
         # The `cd_to_datetime` function will be useful.
         self._designation = pdes
         self.time = cd_to_datetime(cd)  # TODO: Use the cd_to_datetime function for this attribute.
-        self.distance = distance
-        self.velocity = velocity
+        self.distance = float(distance)
+        self.velocity = float(velocity)
 
         # Create an attribute for the referenced NEO, originally None.
         self.neo = None
@@ -132,7 +132,7 @@ class CloseApproach:
         # TODO: Use this object's attributes to return a human-readable string representation.
         # The project instructions include one possibility. Peek at the __repr__
         # method for examples of advanced string formatting.
-        return f"At {self.time_str}, '{self.neo.fullname}' approaches Earth at a distance of {self.distance:.2f} au and a velocity of {self.velocity:.2f} km/s."
+        return f"On {self.time_str}, '{self.neo.fullname}' approaches Earth at a distance of {self.distance:.2f} au and a velocity of {self.velocity:.2f} km/s."
 
     def __repr__(self):
         """Return `repr(self)`, a computer-readable string representation of this object."""
