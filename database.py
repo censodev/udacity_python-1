@@ -88,7 +88,7 @@ class NEODatabase:
         # TODO: Fetch an NEO by its name.
         return self.neos_by_name_dict[name] if name in self.neos_by_name_dict.keys() else None
 
-    def query(self, filters=()):
+    def query(self, filters=[]):
         """Query close approaches to generate those that match a collection of filters.
 
         This generates a stream of `CloseApproach` objects that match all of the
@@ -104,4 +104,8 @@ class NEODatabase:
         """
         # TODO: Generate `CloseApproach` objects that match all of the filters.
         for approach in self._approaches:
-            yield approach
+            is_yield = True
+            for f in filters:
+                is_yield = is_yield and f(approach)
+            if is_yield:
+                yield approach
