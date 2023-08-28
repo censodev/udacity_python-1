@@ -32,6 +32,7 @@ class NearEarthObject:
     initialized to an empty collection, but eventually populated in the
     `NEODatabase` constructor.
     """
+
     def __init__(self, pdes, name, diameter, pha):
         """Create a new `NearEarthObject`.
 
@@ -76,6 +77,7 @@ class CloseApproach:
     private attribute, but the referenced NEO is eventually replaced in the
     `NEODatabase` constructor.
     """
+
     def __init__(self, pdes, cd, distance, velocity):
         """Create a new `CloseApproach`.
 
@@ -117,6 +119,7 @@ class CloseApproach:
                f"velocity={self.velocity:.2f}, neo={self.neo!r})"
 
     def serialize(self):
+        """Serialize object."""
         return {
             'datetime_utc': self.time_str,
             'distance_au': self.distance,

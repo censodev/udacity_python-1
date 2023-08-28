@@ -38,6 +38,7 @@ class AttributeFilter:
     Concrete subclasses can override the `get` classmethod to provide custom
     behavior to fetch a desired attribute from the given `CloseApproach`.
     """
+
     def __init__(self, op, value):
         """Construct a new `AttributeFilter` from an binary predicate and a reference value.
 
@@ -69,32 +70,54 @@ class AttributeFilter:
         raise UnsupportedCriterionError
 
     def __repr__(self):
+        """Printable representation of this object."""
         return f"{self.__class__.__name__}(op=operator.{self.op.__name__}, value={self.value})"
 
+
 class DateFilter(AttributeFilter):
+    """Filter for date."""
+
     @classmethod
     def get(cls, approach):
+        """Get time."""
         return approach.time.date()
 
+
 class DistanceFilter(AttributeFilter):
+    """Filter for distance."""
+
     @classmethod
     def get(cls, approach):
+        """Get distance."""
         return approach.distance
 
+
 class VelocityFilter(AttributeFilter):
+    """Filter for velocity."""
+
     @classmethod
     def get(cls, approach):
+        """Get velocity."""
         return approach.velocity
 
+
 class DiameterFilter(AttributeFilter):
+    """Filter for diameter."""
+
     @classmethod
     def get(cls, approach):
+        """Get diameter."""
         return approach.neo.diameter
 
+
 class HazardousFilter(AttributeFilter):
+    """Filter for hazardous."""
+
     @classmethod
     def get(cls, approach):
+        """Get hazardous."""
         return approach.neo.hazardous
+
 
 def create_filters(
         date=None, start_date=None, end_date=None,
@@ -154,6 +177,7 @@ def create_filters(
     if hazardous != None:
         filters.append(HazardousFilter(operator.eq, hazardous))
     return filters
+
 
 def limit(iterator, n=None):
     """Produce a limited stream of values from an iterator.
