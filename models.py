@@ -50,7 +50,7 @@ class NearEarthObject:
         self.designation = pdes
         self.name = None if name == '' else name
         self.diameter = float('nan') if diameter == '' else float(diameter)
-        self.hazardous = bool(pha)
+        self.hazardous = pha == 'Y'
 
         # Create an empty initial collection of linked approaches.
         self.approaches = []
@@ -138,3 +138,16 @@ class CloseApproach:
         """Return `repr(self)`, a computer-readable string representation of this object."""
         return f"CloseApproach(time={self.time_str!r}, distance={self.distance:.2f}, " \
                f"velocity={self.velocity:.2f}, neo={self.neo!r})"
+
+    def serialize(self):
+        return {
+            'datetime_utc': self.time_str,
+            'distance_au': self.distance,
+            'velocity_km_s': self.velocity,
+            'neo': {
+                'designation': self._designation,
+                'name': self.neo.name,
+                'diameter_km': self.neo.diameter,
+                'potentially_hazardous': self.neo.hazardous
+            }
+        }

@@ -26,12 +26,13 @@ def load_neos(neo_csv_path):
     """
     # TODO: Load NEO data from the given CSV file.
     rs = []
-    data = csv.reader(open(neo_csv_path))
-    for idx, line in enumerate(data):
-        if idx == 0:
-            continue
-        neo = NearEarthObject(line[3], line[4], line[15], line[7])
-        rs.append(neo)
+    with open(neo_csv_path) as fi:
+        data = csv.reader(fi)
+        for idx, line in enumerate(data):
+            if idx == 0:
+                continue
+            neo = NearEarthObject(line[3], line[4], line[15], line[7])
+            rs.append(neo)
     return rs
 
 
@@ -43,8 +44,9 @@ def load_approaches(cad_json_path):
     """
     # TODO: Load close approach data from the given JSON file.
     rs = []
-    data = json.load(open(cad_json_path))
-    for line in data['data']:
-        cad = CloseApproach(line[0], line[3], line[4], line[7])
-        rs.append(cad)
+    with open(cad_json_path) as fi:
+        data = json.load(fi)
+        for line in data['data']:
+            cad = CloseApproach(line[0], line[3], line[4], line[7])
+            rs.append(cad)
     return rs
